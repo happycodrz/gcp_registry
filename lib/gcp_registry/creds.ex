@@ -4,7 +4,7 @@ defmodule GcpRegistry.Creds do
   def get_token do
     with {:ok, token} <- current_token() do
       # refreshing token in Goth is not working properly, so we do it ourselves instead
-      if DateTime.from_unix!(token.expires) < DateTime.utc_now() do
+      if DateTime.compare(DateTime.from_unix!(token.expires), DateTime.utc_now()) == :lt do
         fresh_token()
       else
         token
@@ -22,7 +22,9 @@ defmodule GcpRegistry.Creds do
   def fresh_token do
     with {:ok, token} <- current_token() do
       Logger.debug("Goth: getting fresh token for: #{inspect(token)}")
-      Goth.Token.refresh!(token)
+      with {:ok, newtoken} <- Goth.Token.refresh!(token) do
+        newtoken
+      end
     end
   end
 end
