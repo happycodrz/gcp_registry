@@ -24,6 +24,7 @@ defmodule GcpRegistry.MixProject do
   defp deps do
     [
       {:jason, "~> 1.1"},
+      {:construct, "~> 2.0"},
 
       # google cloud libs
       {:goth, "~> 1.0"},
