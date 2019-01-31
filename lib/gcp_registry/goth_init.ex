@@ -19,10 +19,8 @@ defmodule GcpRegistry.GothInit do
 
         System.get_env("GCP_CONFIG_PATH") != nil ->
           System.get_env("GCP_CONFIG_PATH") |> File.read!()
-
       end
 
     {:ok, Keyword.put(config, :json, json)}
   end
 end
-

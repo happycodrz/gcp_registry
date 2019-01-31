@@ -22,6 +22,7 @@ defmodule GcpRegistry.Creds do
   def fresh_token do
     with {:ok, token} <- current_token() do
       Logger.debug("Goth: getting fresh token for: #{inspect(token)}")
+
       with {:ok, newtoken} <- Goth.Token.refresh!(token) do
         newtoken
       end
