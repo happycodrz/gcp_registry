@@ -1,4 +1,5 @@
 defmodule GcpRegistry.Client do
+  alias GcpRegistry.Creds
   # {:ok, token} = Goth.Token.for_scope("https://www.googleapis.com/auth/pubsub")
   # HTTPoison.get(url, [{"Authorization", "#{token.type} #{token.token}"}])
 
@@ -10,16 +11,25 @@ defmodule GcpRegistry.Client do
       - images with tags and timestamps
   """
   def get(url) do
-    token = GcpRegistry.Creds.get_token()
+    with {:ok, res} <- GcpRegistry.Client.request(url) do
+      res |> GcpRegistry.Response.make!()
+    end
+  end
+
+  def request(url) do
+    token = Creds.get_token()
     HTTPoison.get(url, [{"Authorization", "#{token.type} #{token.token}"}]) |> process()
   end
 
   def process({:ok, %{body: body, headers: headers}}) do
-    if is_json(headers) do
-      body |> Jason.decode!()
-    else
-      body
-    end
+    b =
+      if is_json(headers) do
+        body |> Jason.decode!()
+      else
+        body
+      end
+
+    {:ok, b}
   end
 
   def content_type(headers) do

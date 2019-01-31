@@ -6,12 +6,12 @@ end
 
 defmodule GcpRegistry.Manifest do
   use Construct do
-    field :imageSizeBytes, :integer
-    field :layerId, :string
-    field :mediaType, :string
-    field :timeCreatedMs, GcpRegistry.UnixTime
-    field :timeUploadedMs, GcpRegistry.UnixTime
-    field :tag, {:array, :string}
+    field(:imageSizeBytes, :integer)
+    field(:layerId, :string)
+    field(:mediaType, :string)
+    field(:timeCreatedMs, GcpRegistry.UnixTime)
+    field(:timeUploadedMs, GcpRegistry.UnixTime)
+    field(:tag, {:array, :string})
   end
 end
 
@@ -20,6 +20,6 @@ defmodule GcpRegistry.Response do
     field(:child, {:array, :string})
     field(:tags, {:array, :string})
     field(:name, :string)
-    field :manifest, {:map, GcpRegistry.Manifest}
+    field(:manifest, {:map, GcpRegistry.Manifest})
   end
 end
