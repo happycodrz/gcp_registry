@@ -15,10 +15,9 @@ defmodule GcpRegistry.ClientTest do
     end
 
     test "works for repos" do
-      url1 = "https://eu.gcr.io/v2/project1/company1/repo1/tags/list"
-      b = GcpRegistry.Client.get(url1)
+      res = "https://eu.gcr.io/v2/project1/company1/repo1/tags/list" |> Client.get()
 
-      assert b == %GcpRegistry.Response{
+      assert res == %GcpRegistry.Response{
                child: ["branch1", "branch2"],
                manifest: %{},
                name: "project1/company1/repo1",
@@ -27,10 +26,9 @@ defmodule GcpRegistry.ClientTest do
     end
 
     test "works for repo branches" do
-      url1 = "https://eu.gcr.io/v2/project1/company1/repo1/branch1/tags/list"
-      b = Client.get(url1)
+      res = "https://eu.gcr.io/v2/project1/company1/repo1/branch1/tags/list" |> Client.get()
 
-      assert b == %GcpRegistry.Response{
+      assert res == %GcpRegistry.Response{
                child: [],
                manifest: %{
                  "sha256:067f4d40f8d32b023879a1bfcec67fdf870daee4f307a9f079b3059fd2e53c0e" =>
