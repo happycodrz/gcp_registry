@@ -17,8 +17,13 @@ defmodule GcpRegistry.Client do
   end
 
   def request(url) do
+    HTTPoison.get(url, authheaders())
+    |> process()
+  end
+
+  def authheaders do
     token = Creds.get_token()
-    HTTPoison.get(url, [{"Authorization", "#{token.type} #{token.token}"}]) |> process()
+    [{"Authorization", "#{token.type} #{token.token}"}]
   end
 
   def process({:ok, %{body: body, headers: headers}}) do
