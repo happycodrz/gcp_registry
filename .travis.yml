@@ -1,5 +1,7 @@
 sudo: false
 language: elixir
+before_install:
+  sudo apt-get -y install inotify-tools
 elixir:
   - 1.7
   - 1.8
