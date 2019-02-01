@@ -45,4 +45,9 @@ defmodule GcpRegistry.Params do
       image: image
     }
   end
+
+  @spec to_api_url(params :: GcpRegistry.Params.t()) :: binary
+  def to_api_url(params = %GcpRegistry.Params{}) do
+    "https://#{params.hostname}/v2/#{params.projectid}/#{params.image}"
+  end
 end
