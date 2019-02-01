@@ -9,6 +9,12 @@ defmodule GcpRegistry.Params do
             projectid: nil,
             image: nil
 
+  @type t :: %GcpRegistry.Params{
+          hostname: String.t(),
+          projectid: String.t(),
+          image: String.t()
+        }
+
   @doc """
   https://cloud.google.com/container-registry/docs/pushing-and-pulling?hl=en
     The four options are:
@@ -20,6 +26,7 @@ defmodule GcpRegistry.Params do
   Combine the hostname, your Google Cloud Platform Console project ID, and image name:
     [HOSTNAME]/[PROJECT-ID]/[IMAGE]
   """
+  @spec from_url(url :: binary) :: GcpRegistry.Params.t()
   def from_url(url) do
     [prefix, proj_image] =
       url
