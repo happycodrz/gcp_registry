@@ -6,7 +6,7 @@ elixir:
 otp_release:
   - 19.1
   - 20.1
-env: MIX_ENV=all
+env: MIX_ENV=test
 notifications:
   recipients:
     - roman.heinrich@gmail.com
