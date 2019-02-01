@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/happycodrz/gcp_registry.svg?branch=master)](https://travis-ci.org/happycodrz/gcp_registry)
 # GcpRegistry
 
 
