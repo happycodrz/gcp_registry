@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/happycodrz/gcp_registry.svg?branch=master)](https://travis-ci.org/happycodrz/gcp_registry)
+[![Hex version](https://img.shields.io/hexpm/v/gcp_registry.svg "Hex version")](https://hex.pm/packages/gcp_registry)
+![Hex downloads](https://img.shields.io/hexpm/dt/gcp_registry.svg "Hex downloads")
 # GcpRegistry
 
 
