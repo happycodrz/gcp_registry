@@ -1,4 +1,5 @@
 use Mix.Config
 
 config :goth,
-  disabled: true
+  disabled: true,
+  config_module: nil
