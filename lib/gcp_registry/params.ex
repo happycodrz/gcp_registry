@@ -30,6 +30,7 @@ defmodule GcpRegistry.Params do
   def from_url(url) do
     [prefix, proj_image] =
       url
+      |> strip_trailing_slashes()
       |> String.replace("https://", "")
       |> String.split("gcr.io/")
 
@@ -47,7 +48,15 @@ defmodule GcpRegistry.Params do
   end
 
   @spec to_api_url(params :: GcpRegistry.Params.t()) :: binary
-  def to_api_url(params = %GcpRegistry.Params{}) do
-    "https://#{params.hostname}/v2/#{params.projectid}/#{params.image}"
+  def to_api_url(params = %GcpRegistry.Params{image: image}) when image != "" do
+    "https://#{params.hostname}/v2/#{params.projectid}/#{params.image}/tags/list"
+  end
+
+  def to_api_url(params = %GcpRegistry.Params{image: image}) when image == "" do
+    "https://#{params.hostname}/v2/#{params.projectid}/tags/list"
+  end
+
+  defp strip_trailing_slashes(url) do
+    url |> String.trim_trailing("/")
   end
 end
