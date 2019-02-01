@@ -43,8 +43,8 @@ defmodule GcpRegistry.MixProject do
      licenses: ["MIT License"],
      description: "A lean client for  Google Cloud Container Registry (gcr.io)",
      links: %{
-       github: "https://github.com/happycodrz/gcp_registry",
-       docs: "http://hexdocs.pm/gcp_registry/#{@version}/"
+       Github: "https://github.com/happycodrz/gcp_registry",
+       Docs: "http://hexdocs.pm/gcp_registry/#{@version}/"
      }
     ]
   end
