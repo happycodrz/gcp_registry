@@ -1,4 +1,8 @@
-sudo: false
+cache:
+  directories:
+    - _build
+    - deps
+sudo: true
 language: elixir
 before_install:
   sudo apt-get -y install inotify-tools
