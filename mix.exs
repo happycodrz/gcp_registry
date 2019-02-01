@@ -1,14 +1,15 @@
 defmodule GcpRegistry.MixProject do
   use Mix.Project
-
+  @version  "0.1.0"
   def project do
     [
       app: :gcp_registry,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.7 or ~> 1.8",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      package: package()
     ]
   end
 
@@ -31,7 +32,20 @@ defmodule GcpRegistry.MixProject do
 
       # test libs
       {:mimic, "~> 0.2", only: :test},
-      {:cortex, "~> 0.5", only: [:dev, :test]}
+      {:cortex, "~> 0.5", only: [:dev, :test]},
+      {:ex_doc, ">= 0.0.0", only: :dev}
+    ]
+  end
+
+  defp package do
+    [
+     maintainers: ["Roman Heinrich"],
+     licenses: ["MIT License"],
+     description: "A lean client for  Google Cloud Container Registry (gcr.io)",
+     links: %{
+       github: "https://github.com/happycodrz/gcp_registry",
+       docs: "http://hexdocs.pm/gcp_registry/#{@version}/"
+     }
     ]
   end
 end
