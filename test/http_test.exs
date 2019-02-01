@@ -1,7 +1,7 @@
-defmodule GcpRegistry.ClientTest do
+defmodule GcpRegistry.HTTPTest do
   use ExUnit.Case
   import Mimic
-  alias GcpRegistry.Client
+  alias GcpRegistry.HTTP
   setup :set_mimic_global
 
   def to_time(s) do
@@ -15,7 +15,7 @@ defmodule GcpRegistry.ClientTest do
     end
 
     test "works for repos" do
-      res = "https://eu.gcr.io/v2/project1/company1/repo1/tags/list" |> Client.get()
+      res = "https://eu.gcr.io/v2/project1/company1/repo1/tags/list" |> HTTP.get()
 
       assert res == %GcpRegistry.Response{
                child: ["branch1", "branch2"],
@@ -26,7 +26,7 @@ defmodule GcpRegistry.ClientTest do
     end
 
     test "works for repo branches" do
-      res = "https://eu.gcr.io/v2/project1/company1/repo1/branch1/tags/list" |> Client.get()
+      res = "https://eu.gcr.io/v2/project1/company1/repo1/branch1/tags/list" |> HTTP.get()
 
       assert res == %GcpRegistry.Response{
                child: [],

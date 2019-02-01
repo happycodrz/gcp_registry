@@ -5,7 +5,7 @@ defmodule Stubber do
   """
   import Mimic
 
-  defmodule ClientMock do
+  defmodule HTTPMock do
     def request("https://eu.gcr.io/v2/project1/company1/repo1/tags/list") do
       {:ok,
        %{
@@ -63,8 +63,8 @@ defmodule Stubber do
   end
 
   def setup_stubs() do
-    :"Elixir.GcpRegistry.Client"
-    |> stub(:request, &ClientMock.request/1)
+    :"Elixir.GcpRegistry.HTTP"
+    |> stub(:request, &HTTPMock.request/1)
 
     :"Elixir.GcpRegistry.Creds"
     |> stub(:get_token, &GcpRegistry.CredsMock.get_token/0)

@@ -1,3 +1,3 @@
-Mimic.copy(GcpRegistry.Client)
+Mimic.copy(GcpRegistry.HTTP)
 Mimic.copy(GcpRegistry.Creds)
 ExUnit.start()
