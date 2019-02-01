@@ -5,7 +5,7 @@ defmodule GcpRegistry.MixProject do
     [
       app: :gcp_registry,
       version: "0.1.0",
-      elixir: "~> 1.7",
+      elixir: "~> 1.7 or ~> 1.8",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps()
