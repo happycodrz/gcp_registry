@@ -26,7 +26,7 @@ defmodule GcpRegistry.MixProject do
     [
       {:jason, "~> 1.1"},
       {:construct, "~> 2.0"},
-      {:table_rex, "~> 2.0"},
+      {:table_rex, "~> 2.0", optional: true},
 
       # google cloud libs
       {:goth, "~> 1.0"},
