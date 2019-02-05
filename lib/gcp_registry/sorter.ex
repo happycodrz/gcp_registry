@@ -1,5 +1,5 @@
 defmodule GcpRegistry.Sorter do
-  #https://github.com/RaymondLoranger/map_sorter
+  # https://github.com/RaymondLoranger/map_sorter
   def sort(items, key) do
     items
     |> Enum.sort_by(

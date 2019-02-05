@@ -1,6 +1,6 @@
 defmodule GcpRegistry.MixProject do
   use Mix.Project
-  @version  "0.1.0"
+  @version "0.1.0"
   def project do
     [
       app: :gcp_registry,
@@ -40,13 +40,13 @@ defmodule GcpRegistry.MixProject do
 
   defp package do
     [
-     maintainers: ["Roman Heinrich"],
-     licenses: ["MIT License"],
-     description: "A lean client for  Google Cloud Container Registry (gcr.io)",
-     links: %{
-       Github: "https://github.com/happycodrz/gcp_registry",
-       Docs: "http://hexdocs.pm/gcp_registry/#{@version}/"
-     }
+      maintainers: ["Roman Heinrich"],
+      licenses: ["MIT License"],
+      description: "A lean client for  Google Cloud Container Registry (gcr.io)",
+      links: %{
+        Github: "https://github.com/happycodrz/gcp_registry",
+        Docs: "http://hexdocs.pm/gcp_registry/#{@version}/"
+      }
     ]
   end
 end

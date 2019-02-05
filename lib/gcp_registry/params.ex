@@ -42,11 +42,11 @@ defmodule GcpRegistry.Params do
         true -> [proj_image, ""]
       end
 
-
-    [image, tag] = cond do
-       String.contains?(image, ":") -> image |> String.split(":")
-       true -> [image, nil]
-    end
+    [image, tag] =
+      cond do
+        String.contains?(image, ":") -> image |> String.split(":")
+        true -> [image, nil]
+      end
 
     %Params{
       hostname: "#{prefix}gcr.io",
@@ -57,7 +57,7 @@ defmodule GcpRegistry.Params do
   end
 
   @spec to_tags_list_url(params :: GcpRegistry.Params.t()) :: binary
-  def to_tags_list_url(params = %GcpRegistry.Params{})  do
+  def to_tags_list_url(params = %GcpRegistry.Params{}) do
     "https://#{params.hostname}/v2/#{params.projectid}#{image_tag(params.image, params.tag)}tags/list"
   end
 

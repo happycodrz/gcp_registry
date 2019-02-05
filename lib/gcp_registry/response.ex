@@ -8,8 +8,9 @@ end
 defmodule GcpRegistry.ContainerSha do
   @behaviour Construct.Type
   # "sha256:d148cf9cd373f4de1958091a05ddef23d0cac743fcc7eb680973c527f161100e"
-  def cast(v) when is_binary(v), do:
-      {:ok, v |> String.split(":") |> Enum.at(1) |> String.slice(0, 12)}
+  def cast(v) when is_binary(v),
+    do: {:ok, v |> String.split(":") |> Enum.at(1) |> String.slice(0, 12)}
+
   def cast(_), do: :error
 end
 
