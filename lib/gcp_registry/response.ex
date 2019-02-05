@@ -1,11 +1,21 @@
 defmodule GcpRegistry.UnixTime do
   @behaviour Construct.Type
   def cast(v) when is_binary(v), do: v |> String.to_integer() |> DateTime.from_unix(:millisecond)
+  def cast(v = %DateTime{}), do: {:ok, v}
+  def cast(_), do: :error
+end
+
+defmodule GcpRegistry.ContainerSha do
+  @behaviour Construct.Type
+  # "sha256:d148cf9cd373f4de1958091a05ddef23d0cac743fcc7eb680973c527f161100e"
+  def cast(v) when is_binary(v), do:
+      {:ok, v |> String.split(":") |> Enum.at(1) |> String.slice(0, 12)}
   def cast(_), do: :error
 end
 
 defmodule GcpRegistry.Manifest do
   use Construct do
+    field(:sha, GcpRegistry.ContainerSha, default: "")
     field(:imageSizeBytes, :integer)
     field(:layerId, :string)
     field(:mediaType, :string)
