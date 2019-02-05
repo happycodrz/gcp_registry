@@ -1,7 +1,5 @@
 defmodule GcpRegistry.HTTP do
   alias GcpRegistry.Creds
-  # {:ok, token} = Goth.Token.for_scope("https://www.googleapis.com/auth/pubsub")
-  # HTTPoison.get(url, [{"Authorization", "#{token.type} #{token.token}"}])
 
   @doc """
   algorithm:
@@ -10,20 +8,33 @@ defmodule GcpRegistry.HTTP do
     3. manifest
       - images with tags and timestamps
   """
-  def get(url) do
-    with {:ok, res} <- GcpRegistry.HTTP.request(url) do
-      res |> GcpRegistry.Response.make!()
+  def get(url, headers \\ []) do
+    with {:ok, res} <- GcpRegistry.HTTP.request(:get, url, headers) do
+      # res |> GcpRegistry.Response.make!()
+      res
     end
   end
 
-  def request(url) do
-    HTTPoison.get(url, authheaders())
+  def put(url, body, headers \\ []) do
+    with {:ok, res} <- GcpRegistry.HTTP.request(:put, url, headers) do
+      # res |> GcpRegistry.Response.make!()
+      res
+    end
+  end
+
+  def request(:get, url, headers) do
+    HTTPoison.get(url, authheaders(headers))
     |> process()
   end
 
-  def authheaders do
+  def request(:put, url, body, headers) do
+    HTTPoison.put(url, body, authheaders(headers))
+    |> process()
+  end
+
+  def authheaders(headers \\ []) do
     token = Creds.get_token()
-    [{"Authorization", "#{token.type} #{token.token}"}]
+    [{"Authorization", "#{token.type} #{token.token}"}] ++ headers
   end
 
   def process({:ok, %{body: body, headers: headers}}) do
@@ -42,6 +53,8 @@ defmodule GcpRegistry.HTTP do
   end
 
   def is_json(headers) do
-    content_type(headers) == "application/json"
+    content_type(headers) == "application/json" or
+    content_type(headers) == "application/vnd.docker.distribution.manifest.v2+json" or
+    content_type(headers) == "application/vnd.docker.distribution.manifest.v1+prettyjws"
   end
 end
