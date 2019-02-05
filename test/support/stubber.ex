@@ -6,7 +6,7 @@ defmodule Stubber do
   import Mimic
 
   defmodule HTTPMock do
-    def request("https://eu.gcr.io/v2/project1/company1/repo1/tags/list") do
+    def request(:get, "https://eu.gcr.io/v2/project1/company1/repo1/tags/list", _, _) do
       {:ok,
        %{
          "child" => ["branch1", "branch2"],
@@ -16,7 +16,7 @@ defmodule Stubber do
        }}
     end
 
-    def request("https://eu.gcr.io/v2/project1/company1/repo1/branch1/tags/list") do
+    def request(:get, "https://eu.gcr.io/v2/project1/company1/repo1/branch1/tags/list", _, _) do
       {:ok,
        %{
          "child" => [],
@@ -64,7 +64,7 @@ defmodule Stubber do
 
   def setup_stubs() do
     :"Elixir.GcpRegistry.HTTP"
-    |> stub(:request, &HTTPMock.request/1)
+    |> stub(:request, &HTTPMock.request/4)
 
     :"Elixir.GcpRegistry.Creds"
     |> stub(:get_token, &GcpRegistry.CredsMock.get_token/0)
