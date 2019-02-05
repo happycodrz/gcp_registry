@@ -42,21 +42,28 @@ defmodule GcpRegistry.Params do
         true -> [proj_image, ""]
       end
 
+
+    [image, tag] = cond do
+       String.contains?(image, ":") -> image |> String.split(":")
+       true -> [image, nil]
+    end
+
     %Params{
       hostname: "#{prefix}gcr.io",
       projectid: project_id,
-      image: image
+      image: image,
+      tag: tag
     }
   end
 
   @spec to_tags_list_url(params :: GcpRegistry.Params.t()) :: binary
-  def to_tags_list_url(params = %GcpRegistry.Params{image: image}) when image != "" do
-    "https://#{params.hostname}/v2/#{params.projectid}/#{params.image}/tags/list"
+  def to_tags_list_url(params = %GcpRegistry.Params{})  do
+    "https://#{params.hostname}/v2/#{params.projectid}#{image_tag(params.image, params.tag)}tags/list"
   end
 
-  def to_tags_list_url(params = %GcpRegistry.Params{image: image}) when image == "" do
-    "https://#{params.hostname}/v2/#{params.projectid}/tags/list"
-  end
+  def image_tag("", _), do: "/"
+  def image_tag(image, nil), do: "/" <> image <> "/"
+  def image_tag(image, tag), do: "/" <> image <> ":" <> tag <> "/"
 
   defp strip_trailing_slashes(url) do
     url |> String.trim_trailing("/")

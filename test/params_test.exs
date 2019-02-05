@@ -43,7 +43,8 @@ defmodule GcpRegistry.URLParserTest do
 
       assert Params.from_url(url) |> Map.get(:hostname) == "gcr.io"
       assert Params.from_url(url) |> Map.get(:projectid) == "myproject"
-      assert Params.from_url(url) |> Map.get(:image) == "myimage:mytag1"
+      assert Params.from_url(url) |> Map.get(:image) == "myimage"
+      assert Params.from_url(url) |> Map.get(:tag) == "mytag1"
     end
   end
 
