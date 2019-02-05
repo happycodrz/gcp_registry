@@ -7,12 +7,14 @@ defmodule GcpRegistry.Params do
 
   defstruct hostname: nil,
             projectid: nil,
-            image: nil
+            image: nil,
+            tag: nil
 
   @type t :: %GcpRegistry.Params{
           hostname: String.t(),
           projectid: String.t(),
-          image: String.t()
+          image: String.t(),
+          tag: String.t()
         }
 
   @doc """
@@ -47,12 +49,12 @@ defmodule GcpRegistry.Params do
     }
   end
 
-  @spec to_api_url(params :: GcpRegistry.Params.t()) :: binary
-  def to_api_url(params = %GcpRegistry.Params{image: image}) when image != "" do
+  @spec to_tags_list_url(params :: GcpRegistry.Params.t()) :: binary
+  def to_tags_list_url(params = %GcpRegistry.Params{image: image}) when image != "" do
     "https://#{params.hostname}/v2/#{params.projectid}/#{params.image}/tags/list"
   end
 
-  def to_api_url(params = %GcpRegistry.Params{image: image}) when image == "" do
+  def to_tags_list_url(params = %GcpRegistry.Params{image: image}) when image == "" do
     "https://#{params.hostname}/v2/#{params.projectid}/tags/list"
   end
 

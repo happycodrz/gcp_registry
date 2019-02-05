@@ -47,7 +47,7 @@ defmodule GcpRegistry.URLParserTest do
     end
   end
 
-  describe "to_api_url" do
+  describe "to_tags_list_url" do
     test "works with existing image" do
       params = %Params{
         hostname: "gcr.io",
@@ -56,7 +56,7 @@ defmodule GcpRegistry.URLParserTest do
       }
 
       url = "https://gcr.io/v2/proj1/company1/repo1/tags/list"
-      assert Params.to_api_url(params) == url
+      assert Params.to_tags_list_url(params) == url
     end
 
     test "works with empty image" do
@@ -67,7 +67,7 @@ defmodule GcpRegistry.URLParserTest do
       }
 
       url = "https://gcr.io/v2/proj1/tags/list"
-      assert Params.to_api_url(params) == url
+      assert Params.to_tags_list_url(params) == url
     end
   end
 end
