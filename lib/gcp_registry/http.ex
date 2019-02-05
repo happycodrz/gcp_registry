@@ -1,34 +1,17 @@
 defmodule GcpRegistry.HTTP do
   alias GcpRegistry.Creds
 
-  @doc """
-  algorithm:
-    1. start on top
-    2. visit every child until "child" => [] (empty)
-    3. manifest
-      - images with tags and timestamps
-  """
   def get(url, headers \\ []) do
-    with {:ok, res} <- GcpRegistry.HTTP.request(:get, url, headers) do
-      # res |> GcpRegistry.Response.make!()
-      res
-    end
+    GcpRegistry.HTTP.request(:get, url, "", headers)
   end
 
   def put(url, body, headers \\ []) do
-    with {:ok, res} <- GcpRegistry.HTTP.request(:put, url, headers) do
-      # res |> GcpRegistry.Response.make!()
-      res
-    end
+    GcpRegistry.HTTP.request(:put, url, body, headers)
   end
 
-  def request(:get, url, headers) do
-    HTTPoison.get(url, authheaders(headers))
-    |> process()
-  end
-
-  def request(:put, url, body, headers) do
-    HTTPoison.put(url, body, authheaders(headers))
+  # @callback request(atom, url, body, headers) ::
+  def request(method, url, body, headers) do
+    HTTPoison.request(method, url, body, authheaders(headers))
     |> process()
   end
 
@@ -54,7 +37,21 @@ defmodule GcpRegistry.HTTP do
 
   def is_json(headers) do
     content_type(headers) == "application/json" or
-    content_type(headers) == "application/vnd.docker.distribution.manifest.v2+json" or
-    content_type(headers) == "application/vnd.docker.distribution.manifest.v1+prettyjws"
+      content_type(headers) == "application/vnd.docker.distribution.manifest.v2+json" or
+      content_type(headers) == "application/vnd.docker.distribution.manifest.v1+prettyjws"
+  end
+end
+
+defmodule GcpRegistry.HTTP.TagList do
+  alias GcpRegistry.HTTP
+  alias GcpRegistry.Params
+
+  def get(url) do
+    api_url = Params.from_url(url) |> Params.to_tags_list_url()
+
+    with {:ok, res} <- HTTP.get(api_url),
+         {:ok, structs} <- GcpRegistry.Response.make(res) do
+      {:ok, structs}
+    end
   end
 end
