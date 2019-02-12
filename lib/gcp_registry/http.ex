@@ -45,6 +45,7 @@ end
 defmodule GcpRegistry.HTTP.TagList do
   alias GcpRegistry.HTTP
   alias GcpRegistry.Params
+  alias GcpRegistry.Cache
 
   def get(url) do
     api_url = Params.from_url(url) |> Params.to_tags_list_url()
@@ -54,11 +55,18 @@ defmodule GcpRegistry.HTTP.TagList do
       {:ok, structs}
     end
   end
+
+  def get_cached(url) do
+    Cache.get(url, fn ->
+      get(url)
+    end)
+  end
 end
 
 defmodule GcpRegistry.HTTP.Manifests do
   alias GcpRegistry.HTTP
   alias GcpRegistry.Params
+  alias GcpRegistry.Cache
 
   def get(url) do
     api_url = Params.from_url(url) |> Params.to_manifests_url()
@@ -67,5 +75,11 @@ defmodule GcpRegistry.HTTP.Manifests do
            HTTP.get(api_url, [{"Accept", "application/vnd.docker.distribution.manifest.v2+json"}]) do
       {:ok, res}
     end
+  end
+
+  def get_cached(url) do
+    Cache.get(url, fn ->
+      get(url)
+    end)
   end
 end

@@ -19,11 +19,31 @@ defmodule GcpRegistry.Cache do
     end
   end
 
+  def get(key, fun) do
+    case get(key) do
+      nil ->
+        v = fun.()
+        put(key, v)
+        v
+
+      v ->
+        v
+    end
+  end
+
   def put(key, value) do
     :ets.insert(@tblname, {key, value})
   end
 
   def delete(key) do
     :ets.delete(@tblname, key)
+  end
+
+  def list() do
+    :ets.tab2list(@tblname)
+  end
+
+  def reset() do
+    :ets.delete_all_objects(@tblname)
   end
 end
