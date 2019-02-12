@@ -91,6 +91,7 @@ defmodule GcpRegistry.URLParserTest do
         projectid: "proj1",
         image: ""
       }
+
       assert_raise FunctionClauseError, fn ->
         Params.to_manifests_url(params)
       end
@@ -103,6 +104,7 @@ defmodule GcpRegistry.URLParserTest do
         image: "someimage",
         tag: ""
       }
+
       assert_raise FunctionClauseError, fn ->
         Params.to_manifests_url(params)
       end

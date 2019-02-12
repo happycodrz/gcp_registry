@@ -1,7 +1,6 @@
-defmodule GcpRegistry.HTTPTest do
+defmodule GcpRegistry.HTTP.TagListTest do
   use ExUnit.Case
   import Mimic
-  alias GcpRegistry.HTTP
   alias GcpRegistry.HTTP.TagList
   setup :set_mimic_global
 
@@ -9,7 +8,7 @@ defmodule GcpRegistry.HTTPTest do
     DateTime.from_iso8601(s) |> elem(1)
   end
 
-  describe "normal traverse" do
+  describe ":get" do
     setup do
       Stubber.setup_stubs()
       :ok

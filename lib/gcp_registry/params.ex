@@ -61,7 +61,8 @@ defmodule GcpRegistry.Params do
     "https://#{params.hostname}/v2/#{params.projectid}#{image_tag(params.image, params.tag)}tags/list"
   end
 
-  def to_manifests_url(params = %GcpRegistry.Params{image: image, tag: tag}) when image != nil and image != "" and tag != nil and tag != ""  do
+  def to_manifests_url(params = %GcpRegistry.Params{image: image, tag: tag})
+      when image != nil and image != "" and tag != nil and tag != "" do
     "https://#{params.hostname}/v2/#{params.projectid}/#{params.image}/manifests/#{params.tag}"
   end
 
