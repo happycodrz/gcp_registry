@@ -16,7 +16,7 @@ defmodule GcpRegistry.HTTP.ManifestsTest do
 
     test "works for repos with tags" do
       {:ok, res} =
-        "eu.gcr.io/project1/company1/repo1/branch1:sometag" |> GcpRegistry.HTTP.Manifests.get()
+        "eu.gcr.io/project1/company1/repo1/branch1:sometag" |> Manifests.get()
 
       assert res == %GcpRegistry.ManifestsResponse{
                config: %GcpRegistry.DockerLayer{
