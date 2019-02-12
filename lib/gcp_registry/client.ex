@@ -9,33 +9,21 @@ defmodule GcpRegistry.Client do
      list-tags - List tags and digests for the specified image.
      untag - Remove existing image tags.
   """
-  alias GcpRegistry.Params
-  alias GcpRegistry.{Manifest}
+  alias GcpRegistry.HTTP.TagList
 
   @doc """
   List existing images
   $ gcloud container images list --repository=gcr.io/myproject
   """
-  def list(url) do
-    with {:ok, structs} <- GcpRegistry.HTTP.TagList.get(url) do
-      structs |> Map.get(:child)
-    end
+  def list_images(url) do
+    TagList.list_images(url)
   end
 
   @doc """
   $ gcloud container images list-tags --help
   """
   def list_tags(url) do
-    with {:ok, structs} <- GcpRegistry.HTTP.TagList.get(url) do
-      structs
-      |> Map.get(:manifest)
-      |> Enum.map(fn {key, value} ->
-        value
-        |> Map.put(:sha, key)
-        |> Manifest.make!()
-      end)
-      |> GcpRegistry.Sorter.sort(:timeCreatedMs)
-    end
+    TagList.list_tags(url)
   end
 
   @doc """
@@ -46,8 +34,8 @@ defmodule GcpRegistry.Client do
         $ gcloud container images add-tag gcr.io/myproject/myimage:mytag1
           gcr.io/myproject/myimage:latest
   """
-  def add_tag(src_img, tag) do
-    params = Params.from_url(src_img) |> IO.inspect()
+  def add_tag(_src_img, _tag) do
+    # TODO
   end
 
   @doc """
