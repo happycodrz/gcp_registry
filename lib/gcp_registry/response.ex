@@ -34,3 +34,20 @@ defmodule GcpRegistry.Response do
     field(:manifest, {:map, GcpRegistry.Manifest})
   end
 end
+
+defmodule GcpRegistry.DockerLayer do
+  use Construct do
+    field(:digest, :string)
+    field(:mediaType, :string)
+    field(:size, :integer)
+  end
+end
+
+defmodule GcpRegistry.ManifestsResponse do
+  use Construct do
+    field(:config, GcpRegistry.DockerLayer)
+    field(:layers, {:array, GcpRegistry.DockerLayer})
+    field(:mediaType, :string)
+    field(:schemaVersion, :integer)
+  end
+end
