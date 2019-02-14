@@ -1,8 +1,5 @@
 defmodule GcpRegistry.HTTP.TagList do
-  alias GcpRegistry.HTTP
-  alias GcpRegistry.Params
-  alias GcpRegistry.Cache
-  alias GcpRegistry.{Manifest}
+  alias GcpRegistry.{HTTP, Params, Cache, Manifest, Sorter, Response}
   alias __MODULE__
 
   def list_images(url) do
@@ -34,7 +31,7 @@ defmodule GcpRegistry.HTTP.TagList do
   end
 
   def get_cached(url) do
-    Cache.get(url, fn ->
+    Cache.get("tags+" <> url, fn ->
       get(url)
     end)
   end
