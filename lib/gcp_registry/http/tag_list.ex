@@ -17,15 +17,21 @@ defmodule GcpRegistry.HTTP.TagList do
         |> Map.put(:sha, key)
         |> Manifest.make!()
       end)
-      |> GcpRegistry.Sorter.sort(:timeCreatedMs)
+      |> Sorter.sort(:timeCreatedMs)
     end
+  end
+
+  def find_tag(url, tag) do
+    url
+    |> list_tags()
+    |> Enum.find(fn x -> tag in x.tag end)
   end
 
   def get(url) do
     api_url = Params.from_url(url) |> Params.to_tags_list_url()
 
     with {:ok, res} <- HTTP.get(api_url),
-         {:ok, structs} <- GcpRegistry.Response.make(res) do
+         {:ok, structs} <- Response.make(res) do
       {:ok, structs}
     end
   end

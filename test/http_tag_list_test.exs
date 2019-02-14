@@ -61,6 +61,24 @@ defmodule GcpRegistry.HTTP.TagListTest do
     end
   end
 
+  describe ":find_tag" do
+    setup do
+      Stubber.setup_stubs()
+      :ok
+    end
+
+    test "works for repos" do
+      res = "eu.gcr.io/project1/company1/repo1" |> TagList.find_tag("latest")
+      assert res == nil
+    end
+
+    test "works for branches" do
+      res =
+        "eu.gcr.io/project1/company1/repo1/branch1" |> TagList.find_tag("latest") |> Map.get(:tag)
+
+      assert res == ["67e67747be891b7ea1b0440b35a41296342c91fd", "latest"]
+    end
+  end
 
   describe ":get" do
     setup do

@@ -1,13 +1,6 @@
 defmodule GcpRegistry.Client do
   @moduledoc """
   a high level client for gcp.io registries
-  mimics `gcloud container images` commands
-     add-tag - Adds tags to existing image.
-     delete - Delete existing images.
-     describe - Lists information about the specified image.
-     list - List existing images.
-     list-tags - List tags and digests for the specified image.
-     untag - Remove existing image tags.
   """
   alias GcpRegistry.HTTP.TagList
 
@@ -24,6 +17,14 @@ defmodule GcpRegistry.Client do
   """
   def list_tags(url) do
     TagList.list_tags(url)
+  end
+
+  @doc """
+  Example:
+    iex> GcpRegistry.Client.find_tag("eu.gcr.io/proj1/comp1/repo1/branch1", "latest")
+  """
+  def find_tag(url, tag) do
+    TagList.find_tag(url, tag)
   end
 
   @doc """
