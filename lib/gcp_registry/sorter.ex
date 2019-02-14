@@ -1,4 +1,7 @@
 defmodule GcpRegistry.Sorter do
+  @moduledoc """
+  a little util module to sort structs on single level field name
+  """
   # https://github.com/RaymondLoranger/map_sorter
   def sort(items, key) do
     items
