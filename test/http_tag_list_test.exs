@@ -21,26 +21,27 @@ defmodule GcpRegistry.HTTP.TagListTest do
 
     test "works for repo branches" do
       res = "eu.gcr.io/project1/company1/repo1/branch1" |> TagList.list_tags()
+
       assert res == [
-        %GcpRegistry.Manifest{
-          imageSizeBytes: 15171842,
-          layerId: "",
-          mediaType: "application/vnd.docker.distribution.manifest.v2+json",
-          sha: "0918630c0b66",
-          tag: [],
-          timeCreatedMs: to_time("2017-12-27 12:52:21.470Z"),
-          timeUploadedMs: to_time("2017-12-27 12:52:29.387Z")
-        },
-        %GcpRegistry.Manifest{
-          imageSizeBytes: 15171490,
-          layerId: "",
-          mediaType: "application/vnd.docker.distribution.manifest.v2+json",
-          sha: "067f4d40f8d3",
-          tag: ["67e67747be891b7ea1b0440b35a41296342c91fd", "latest"],
-          timeCreatedMs: to_time("2017-12-22 14:39:15.598Z"),
-          timeUploadedMs: to_time("2017-12-22 14:39:24.775Z")
-        }
-      ]
+               %GcpRegistry.Manifest{
+                 imageSizeBytes: 15_171_842,
+                 layerId: "",
+                 mediaType: "application/vnd.docker.distribution.manifest.v2+json",
+                 sha: "0918630c0b66",
+                 tag: [],
+                 timeCreatedMs: to_time("2017-12-27 12:52:21.470Z"),
+                 timeUploadedMs: to_time("2017-12-27 12:52:29.387Z")
+               },
+               %GcpRegistry.Manifest{
+                 imageSizeBytes: 15_171_490,
+                 layerId: "",
+                 mediaType: "application/vnd.docker.distribution.manifest.v2+json",
+                 sha: "067f4d40f8d3",
+                 tag: ["67e67747be891b7ea1b0440b35a41296342c91fd", "latest"],
+                 timeCreatedMs: to_time("2017-12-22 14:39:15.598Z"),
+                 timeUploadedMs: to_time("2017-12-22 14:39:24.775Z")
+               }
+             ]
     end
   end
 
