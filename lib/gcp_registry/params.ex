@@ -1,6 +1,6 @@
 defmodule GcpRegistry.Params do
   @moduledoc """
-  represent arguments to for a request to gcr.io registry
+  represent arguments for a request to gcr.io registry
   """
 
   alias __MODULE__
